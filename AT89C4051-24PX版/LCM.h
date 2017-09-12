@@ -1,62 +1,62 @@
-//	LCM ¨ç¦¡®w
-//	§@ªÌ:ªL°ª»·
-//	¤é´Á:2013/1/22
-//	¥»¨ç¦¡®w­×§ï¦Û<<¨Ò»¡89S51-C»y¨¥ ±i¸q©M>>©Ò´£¨Ñªºµ{¦¡½X
-//	¨Ã¥[¥H§ï¨}
-//	¨Ï¥Î«e»İ­n #include<string.h>,#include<intrins.h>
+//	LCM å‡½å¼åº«
+//	ä½œè€…:æ—é«˜é 
+//	æ—¥æœŸ:2013/1/22
+//	æœ¬å‡½å¼åº«ä¿®æ”¹è‡ª<<ä¾‹èªª89S51-Cèªè¨€ å¼µç¾©å’Œ>>æ‰€æä¾›çš„ç¨‹å¼ç¢¼
+//	ä¸¦åŠ ä»¥æ”¹è‰¯
+//	ä½¿ç”¨å‰éœ€è¦ #include<string.h>,#include<intrins.h>
 #include<intrins.h>
 #include <string.H>
 #define _nop_(); _nop_();_nop_();_nop_();_nop_();
-//====ÀË¬d¦£¸L¨ç¼Æ================================
+//====æª¢æŸ¥å¿™ç¢Œå‡½æ•¸================================
 inline;void check_BF(void)
-{	LCD_Enable=0;					// ¸T¤îÅª¼g°Ê§@ 
-	do						// do-while°j°é¶}©l 
-	{ 	BF=1;				// ³]©wBF¬°¿é¤J 
-  	RS = 0; RW = 1;LCD_Enable = 1;	// Åª¨úBF¤ÎAC
-	}while(BF == 1);		// ¦£¸LÄ~Äòµ¥ 
-}							//	check_BF()¨ç¼Æµ²§ô 
-//==== ©µ¿ğ¨ç¼Æ ================================
+{	LCD_Enable=0;					// ç¦æ­¢è®€å¯«å‹•ä½œ 
+	do						// do-whileè¿´åœˆé–‹å§‹ 
+	{ 	BF=1;				// è¨­å®šBFç‚ºè¼¸å…¥ 
+  	RS = 0; RW = 1;LCD_Enable = 1;	// è®€å–BFåŠAC
+	}while(BF == 1);		// å¿™ç¢Œç¹¼çºŒç­‰ 
+}							//	check_BF()å‡½æ•¸çµæŸ 
+//==== å»¶é²å‡½æ•¸ ================================
 void delay1ms(int x)
-{	int i,j;				// «Å§iÅÜ¼Æ 
-	for (i=1;i<4*x;i++)		// °õ¦æx¦¸,©µ¿ğX*1ms
+{	int i,j;				// å®£å‘Šè®Šæ•¸ 
+	for (i=1;i<4*x;i++)		// åŸ·è¡Œxæ¬¡,å»¶é²X*1ms
 		for (j=1;j<120;j++)
-			;// °õ¦æ120¦¸,©µ¿ğ1ms
-}							// delay1ms()¨ç¼Æµ²§ô
-//==== ¼g¤J«ü¥O¨ç¼Æ ================================
+			;// åŸ·è¡Œ120æ¬¡,å»¶é²1ms
+}							// delay1ms()å‡½æ•¸çµæŸ
+//==== å¯«å…¥æŒ‡ä»¤å‡½æ•¸ ================================
 void write_inst(char inst)
-{	check_BF();				// ÀË¬d¬O§_¦£¸L  
+{	check_BF();				// æª¢æŸ¥æ˜¯å¦å¿™ç¢Œ  
 	RS = 0; RW = 0; LCD_Enable = 1;	// 
-	LCDP = inst;			// ¼g¤J«ü¥O¦ÜLCM
-	_nop_(); //©µ¿ğ1us
+	LCDP = inst;			// å¯«å…¥æŒ‡ä»¤è‡³LCM
+	_nop_(); //å»¶é²1us
 	LCD_Enable=0;
-	check_BF();				// ÀË¬d¬O§_¦£¸L 
-}							// write_inst()¨ç¼Æµ²§ô 
-//==== ¼g¤J¦r¤¸¸ê®Æ¨ç¼Æ ============================
+	check_BF();				// æª¢æŸ¥æ˜¯å¦å¿™ç¢Œ 
+}							// write_inst()å‡½æ•¸çµæŸ 
+//==== å¯«å…¥å­—å…ƒè³‡æ–™å‡½æ•¸ ============================
 void write_char(char chardata)
-{	check_BF();				// ÀË¬d¬O§_¦£¸L 
-	LCDP = chardata;		// LCMÅª¤J¦r¤¸ 
-	RS = 1; RW = 0 ;LCD_Enable = 1;	// ¼g¤J¸ê®Æ¦ÜLCM
-	_nop_(); //©µ¿ğ1us
-	check_BF();				// ÀË¬d¬O§_¦£¸L 
-}							// write_char()¨ç¼Æµ²§ô
-//==== ¼g¤J¦r¦ê¸ê®Æ¨ç¼Æ ===( by ªL°ª»· )============
+{	check_BF();				// æª¢æŸ¥æ˜¯å¦å¿™ç¢Œ 
+	LCDP = chardata;		// LCMè®€å…¥å­—å…ƒ 
+	RS = 1; RW = 0 ;LCD_Enable = 1;	// å¯«å…¥è³‡æ–™è‡³LCM
+	_nop_(); //å»¶é²1us
+	check_BF();				// æª¢æŸ¥æ˜¯å¦å¿™ç¢Œ 
+}							// write_char()å‡½æ•¸çµæŸ
+//==== å¯«å…¥å­—ä¸²è³‡æ–™å‡½æ•¸ ===( by æ—é«˜é  )============
 void write_string(char *ptrStr)
 {	unsigned char i;
 	for(i=0;i<strlen(ptrStr);i++)
 		write_char(ptrStr[i]);
-}							// write_string()¨ç¼Æµ²§ô
-//====ªì©l³]©w¨ç¼Æ(8¦ì¤¸¶Ç¿é¼Ò¦¡)===================
+}							// write_string()å‡½æ•¸çµæŸ
+//====åˆå§‹è¨­å®šå‡½æ•¸(8ä½å…ƒå‚³è¼¸æ¨¡å¼)===================
 void init_LCM(void)
-{	write_inst(0x30);	// ³]©w¥\¯à-8¦ì¤¸-°ò¥»«ü¥O 
-	write_inst(0x30);	// ³]©w¥\¯à-8¦ì¤¸-°ò¥»«ü¥O 
-	write_inst(0x38);	// ­^¤åLCM¬Û®e³]©w¡A¤¤¤åLCM¥i©¿²¤ 
-	write_inst(0x38);	// ­^¤åLCM³]©w¨â¦C¡A¤¤¤åLCM¥i©¿²¤ 
-	write_inst(0x08);	// Åã¥Ü¥\¯à-ÃöÅã¥Ü¹õ-µL´å¼Ğ-´å¼Ğ¤£°{ 
-	write_inst(0x01);	// ²M°£Åã¥Ü¹õ(¶ñ0x20,I/D=1)
-	write_inst(0x0e);	// ¿é¤J¼Ò¦¡-¦ì§}»¼¼W-ÃöÅã¥Ü¹õ 
-	write_inst(0x06);	// Åã¥Ü¥\¯à-¶}Åã¥Ü¹õ-µL´å¼Ğ-´å¼Ğ¤£°{ 
-}						// init_LCM()¨ç¼Æµ²§ô 
-//====¼g¤J¦Û«Ø¦r§Î===================
+{	write_inst(0x30);	// è¨­å®šåŠŸèƒ½-8ä½å…ƒ-åŸºæœ¬æŒ‡ä»¤ 
+	write_inst(0x30);	// è¨­å®šåŠŸèƒ½-8ä½å…ƒ-åŸºæœ¬æŒ‡ä»¤ 
+	write_inst(0x38);	// è‹±æ–‡LCMç›¸å®¹è¨­å®šï¼Œä¸­æ–‡LCMå¯å¿½ç•¥ 
+	write_inst(0x38);	// è‹±æ–‡LCMè¨­å®šå…©åˆ—ï¼Œä¸­æ–‡LCMå¯å¿½ç•¥ 
+	write_inst(0x08);	// é¡¯ç¤ºåŠŸèƒ½-é—œé¡¯ç¤ºå¹•-ç„¡æ¸¸æ¨™-æ¸¸æ¨™ä¸é–ƒ 
+	write_inst(0x01);	// æ¸…é™¤é¡¯ç¤ºå¹•(å¡«0x20,I/D=1)
+	write_inst(0x0e);	// è¼¸å…¥æ¨¡å¼-ä½å€éå¢-é—œé¡¯ç¤ºå¹• 
+	write_inst(0x06);	// é¡¯ç¤ºåŠŸèƒ½-é–‹é¡¯ç¤ºå¹•-ç„¡æ¸¸æ¨™-æ¸¸æ¨™ä¸é–ƒ 
+}						// init_LCM()å‡½æ•¸çµæŸ 
+//====å¯«å…¥è‡ªå»ºå­—å½¢===================
 void NewType(void)
 {	char i;
 	char code cDegreesC[]={0x1C,0x14,0x1b,0x04,0x04,0x04,0x03,0x00};
@@ -64,37 +64,37 @@ void NewType(void)
 	char code cGAO[]= {0x04,0x1F,0x0A,0x0E,0x1F,0x15,0x11,0x00};
 	char code cYUAN[]={0x1A,0x07,0x0A,0x1D,0x0F,0x1A,0x17,0x00};	
 	
-	//	¼g¤J«×Cªº²Å¸¹
+	//	å¯«å…¥åº¦Cçš„ç¬¦è™Ÿ
 	RS = 0; RW = 0 ;
 	LCD_Enable = 1;
-	LCDP=0x40; //«ü©wGCRAM¦ì§}
+	LCDP=0x40; //æŒ‡å®šGCRAMä½å€
 	LCD_Enable=0; check_BF();
 	RS = 1; RW = 0;
 	for(i=0;i<8;i++)
 		write_char(cDegreesC[i]);
 
-	//	¼g¤J"ªL"
+	//	å¯«å…¥"æ—"
 	RS = 0; RW = 0 ;
 	LCD_Enable = 1;
-	LCDP=0x48; //«ü©wGCRAM¦ì§}
+	LCDP=0x48; //æŒ‡å®šGCRAMä½å€
 	LCD_Enable=0; check_BF();
 	RS = 1; RW = 0;
 	for(i=0;i<8;i++)
 		write_char(cLIN[i]);
 	
-	//	¼g¤J"°ª"
+	//	å¯«å…¥"é«˜"
 	RS = 0; RW = 0 ;
 	LCD_Enable = 1;
-	LCDP=0x50; //«ü©wGCRAM¦ì§}
+	LCDP=0x50; //æŒ‡å®šGCRAMä½å€
 	LCD_Enable=0; check_BF();
 	RS = 1; RW = 0;
 	for(i=0;i<8;i++)
 		write_char(cGAO[i]);
 	
-	//	¼g¤J"»·"
+	//	å¯«å…¥"é "
 	RS = 0; RW = 0 ;
 	LCD_Enable = 1;
-	LCDP=0x58; //«ü©wGCRAM¦ì§}
+	LCDP=0x58; //æŒ‡å®šGCRAMä½å€
 	LCD_Enable=0; check_BF();
 	RS = 1; RW = 0;
 	for(i=0;i<8;i++)

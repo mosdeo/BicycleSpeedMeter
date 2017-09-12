@@ -18,64 +18,64 @@ void delay_77us(void)
 
 void delay_4us(void)
 {
- //ªÅ¥Õ°Æµ{¦¡¬ù4us
+  //ç©ºç™½å‰¯ç¨‹å¼ç´„4us
 }inline;
 bit read_1bit(void)
 {
- bit DATA0;
- DQ_IO=0;
- delay_77us();
- DQ_IO=1;
- delay_77us();
- DATA0=DQ_IO;
- delay_77us();
- return(DATA0);
+  bit DATA0;
+  DQ_IO=0;
+  delay_77us();
+  DQ_IO=1;
+  delay_77us();
+  DATA0=DQ_IO;
+  delay_77us();
+  return(DATA0);
 }
 unsigned char read_1byte(void)
 {
   unsigned char i,j,DATA;
-   DATA=0;
-   for (i=0;i<8;i++)
-   {
-			j=read_1bit();
-			DATA=(DATA>>1)|(j<<7);
-   }
-   return(DATA);
+  DATA=0;
+  for (i=0;i<8;i++)
+  {
+    j=read_1bit();
+    DATA=(DATA>>1)|(j<<7);
+  }
+  return(DATA);
 } 
 void reset_DS(void)
- {
-  DQ_IO=0; // »İ¤j©ó480us
+{
+  DQ_IO=0; // éœ€å¤§æ–¼480us
   delay_ms(1);
-	 
-  DQ_IO=1; // »İ¤j©ó480us(¥]§tµ¥«İ¦^À³¯ßªi)
+
+  DQ_IO=1; // éœ€å¤§æ–¼480us(åŒ…å«ç­‰å¾…å›æ‡‰è„ˆæ³¢)
   delay_ms(1);
- }
+}
 
 void write_1byte(unsigned char DATA)
- {
+{
   unsigned char i;
   bit DATA0;
   {
-   for (i =0;i<8;i++)
-      {
+    for (i =0;i<8;i++)
+    {
       DATA0=DATA&0x01;
       if (DATA0==1)
-	  {
-	     DQ_IO=0;
-	     delay_77us();
-	     DQ_IO=1;
-	     delay_77us();
+      {
+        DQ_IO=0;
+        delay_77us();
+        DQ_IO=1;
+        delay_77us();
       }
-     else
-	  {
-         DQ_IO=0;
-	     delay_77us();
-	     DQ_IO=1;
-	     delay_77us();
+      else
+      {
+          DQ_IO=0;
+        delay_77us();
+        DQ_IO=1;
+        delay_77us();
       } 
-     DATA=DATA>>1;
-   }
-  }
+      DATA=DATA>>1;
+    }
+}
 }
 
 
@@ -92,17 +92,17 @@ char read_temp (void)
 
 void display (char TEMP)
 {
- if (TEMP<0)
-    {
-	 NUMBER[0]=11;
-	 TEMP=-TEMP;
-	 }
- else 
-     {
-	  NUMBER[0]=TEMP/100;
-	  if (NUMBER[0]==0)
-	      NUMBER[0]=10;
-	 }
+  if(TEMP<0)
+  {
+    NUMBER[0]=11;
+    TEMP=-TEMP;
+  }
+  else 
+  {
+    NUMBER[0]=TEMP/100;
+    if(NUMBER[0]==0)
+      NUMBER[0]=10;
+  }
   NUMBER[1]=(TEMP/10)%10;
   NUMBER[2]=TEMP%10;
 }

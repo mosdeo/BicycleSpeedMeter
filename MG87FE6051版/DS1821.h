@@ -50,7 +50,7 @@ void delay_ms(unsigned int time)
 
 // void delay_4us(void)
 // {
-//  //ªÅ¥Õ°Æµ{¦¡¬ù4us
+//  //ç©ºç™½å‰¯ç¨‹å¼ç´„4us
 // 	delay_77us();
 // }
 
@@ -79,9 +79,9 @@ unsigned char read_1byte(void)
 } 
 void reset_DS(void)
  {
-  DQ_IO=0; // »İ¤j©ó480us
+  DQ_IO=0; // éœ€å¤§æ–¼480us
   delay_ms(1);
-  DQ_IO=1; // »İ¤j©ó480us(¥]§tµ¥«İ¦^À³¯ßªi)
+  DQ_IO=1; // éœ€å¤§æ–¼480us(åŒ…å«ç­‰å¾…å›æ‡‰è„ˆæ³¢)
   delay_ms(1);
  }
 

@@ -16,7 +16,7 @@ void P42XOR(void)
 
 void GetTempByDS1821(void)
 {
-	// �o�O�˴��ū�
+	// 這是檢測溫度
 	reset_DS();
 	write_1byte(0xee);
 	TEMP=read_temp();
@@ -59,7 +59,7 @@ void WLDS_puts(char *a)
 }
 
 void TxAll(void)
-{//�@���e�X�樮�X�����Ҧ���T
+{//一次送出單車碼表的所有資訊
  // $BicycleMCU,<Speed>,<Mile>,<Temp>,<CR><LF>
 
 	WLDS_puts("$BicycleMCU,");
@@ -72,15 +72,15 @@ void TxAll(void)
 }
 
 void TxSpeed(void)
-{//�e�X�G���,�H�Q�i����ܳt�ת��r��
- //�Ҧp'5''5'��'6''6'
+{//送出二位數,以十進位表示速度的字元
+ //例如'5''5'或'6''6'
 	
-	//�e�X�Q���
+	//送出十位數
 	SBUF=TABLE[(unDispSpeed%100)/10];
 	while(TI==0);
 	TI=0;
 	
-	//�e�X�Ӧ��
+	//送出個位數
 	SBUF=TABLE[unDispSpeed%10];
 	while(TI==0);
 	TI=0;

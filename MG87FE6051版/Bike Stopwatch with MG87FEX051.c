@@ -2,51 +2,51 @@
 #include <stdio.h>
 
 
-//==== «Å§i DS1821 ±M¥Îregister ========
+//==== å®£å‘Š DS1821 å°ˆç”¨register ========
 #define DQ_IO P37
 unsigned char NUMBER[3];
-char code TABLE[13]={0x30,0x31,0x32,0x33,0x34,0x35,0x36,0x37,0x38,0x39,0x20,0x2d,0x2e};//  ªÅ¥Õ- .
+char code TABLE[13]={0x30,0x31,0x32,0x33,0x34,0x35,0x36,0x37,0x38,0x39,0x20,0x2d,0x2e};//  ç©ºç™½- .
 char TEMP;
 bit bdata work=0;
-//==== DS1821.h¥²¶·include¦b¥H¤W¦Uregister¤§«á
+//==== DS1821.hå¿…é ˆincludeåœ¨ä»¥ä¸Šå„registerä¹‹å¾Œ
 #include <DS1821.h>
-//==== «Å§i DS1821 ±M¥Îregister µ²§ô ===
+//==== å®£å‘Š DS1821 å°ˆç”¨register çµæŸ ===
 
 
-//==== «Å§i LCM ±M¥Îregister ========
+//==== å®£å‘Š LCM å°ˆç”¨register ========
 #define RS P35
-#define RW P34 //0¼g1Åª
-#define LCD_Enable  P33	//­t½tÄ²µo
-//¥H¤U¨â­Ódefine¨Ï¥ÎªºPort¥²¶·¬Û¦P
+#define RW P34 //0å¯«1è®€
+#define LCD_Enable  P33	//è² ç·£è§¸ç™¼
+//ä»¥ä¸‹å…©å€‹defineä½¿ç”¨çš„Portå¿…é ˆç›¸åŒ
 #define BF   P10
 #define LCDP P1
-//==== LCM.h¥²¶·include¦b¥H¤W¦Uregister¤§«á
+//==== LCM.hå¿…é ˆincludeåœ¨ä»¥ä¸Šå„registerä¹‹å¾Œ
 #include <LCM.h>
-//==== «Å§i LCM ±M¥Îregister µ²§ô ===
+//==== å®£å‘Š LCM å°ˆç”¨register çµæŸ ===
 
 
-//==== «Å§i ³t«×ªí ±M¥Îregister ========
-#define MagneticSW P32 		//«e½üºÏ©Ê¶}Ãö,start/stop ±µ¦ÜP3.2(INT0)
-/*«Å§iT0­p®É¬ÛÃö«Å§i*/  // THx TLx ­pºâ°Ñ¦Ò 7-9­¶ 
-#define  count_M1   3694		// T0(MODE 1)¤§­p¶q­È,1mSec @ 44326800Hz,SYSCLK/12
-#define  TH_M1  (65636-count_M1)>>8// T0(MODE 1)­p¶q°ª8¦ì¤¸ 
-#define  TL_M1  (65636-count_M1)&0x00FF// T0(MODE 1)­p¶q§C8¦ì¤¸
-/* «Å§i°ò¥»ÅÜ¼Æ */
-unsigned int  mSecCounter=0;		// ¨C­ÓÄ²µo¶¡¹j(¨C°é)mSec¼Æ
-unsigned int  unDisp_mSec=65536;		// Åã¥Ü¥ÎªºmSec¼Æ
-unsigned int  unDispSpeed=0;			// Åã¥Ü¥Îªº³t²v
-unsigned int  unDispMileage=0;		//Åã¥Ü¥Îªº²Ö­p¨½µ{
-unsigned int  unCycleCounter=0;		// ²Ö­p°é¼Æ,­pºâ¨½µ{¥Î,26in*pi*65535=136km(³Ì¤j­pµ{)
-void debouncer(void); 		// «Å§i¨¾¼u¸õ¨ç¼Æ
-//==== «Å§i ³t«×ªí ±M¥Îregisterµ²§ô ========
+//==== å®£å‘Š é€Ÿåº¦è¡¨ å°ˆç”¨register ========
+#define MagneticSW P32 		//å‰è¼ªç£æ€§é–‹é—œ,start/stop æ¥è‡³P3.2(INT0)
+/*å®£å‘ŠT0è¨ˆæ™‚ç›¸é—œå®£å‘Š*/  // THx TLx è¨ˆç®—åƒè€ƒ 7-9é  
+#define  count_M1   3694		// T0(MODE 1)ä¹‹è¨ˆé‡å€¼,1mSec @ 44326800Hz,SYSCLK/12
+#define  TH_M1  (65636-count_M1)>>8// T0(MODE 1)è¨ˆé‡é«˜8ä½å…ƒ 
+#define  TL_M1  (65636-count_M1)&0x00FF// T0(MODE 1)è¨ˆé‡ä½8ä½å…ƒ
+/* å®£å‘ŠåŸºæœ¬è®Šæ•¸ */
+unsigned int  mSecCounter=0;		// æ¯å€‹è§¸ç™¼é–“éš”(æ¯åœˆ)mSecæ•¸
+unsigned int  unDisp_mSec=65536;		// é¡¯ç¤ºç”¨çš„mSecæ•¸
+unsigned int  unDispSpeed=0;			// é¡¯ç¤ºç”¨çš„é€Ÿç‡
+unsigned int  unDispMileage=0;		//é¡¯ç¤ºç”¨çš„ç´¯è¨ˆé‡Œç¨‹
+unsigned int  unCycleCounter=0;		// ç´¯è¨ˆåœˆæ•¸,è¨ˆç®—é‡Œç¨‹ç”¨,26in*pi*65535=136km(æœ€å¤§è¨ˆç¨‹)
+void debouncer(void); 		// å®£å‘Šé˜²å½ˆè·³å‡½æ•¸
+//==== å®£å‘Š é€Ÿåº¦è¡¨ å°ˆç”¨registerçµæŸ ========
 
 
-//==== ¶}¾÷µe­± ========
+//==== é–‹æ©Ÿç•«é¢ ========
 unsigned char code MSG_Welcome_Line1[]="  NTNU Lin Kao-Yuan ";
 unsigned char code MSG_Welcome_Line2[]="Bicycle's MCU System";
 unsigned char code MSG_Welcome_Line3[]="     0958889115";
 unsigned char code MSG_Welcome_Line4[]="  mosdeo@gmail.com";
-//==== ¶}¾÷µe­± ========
+//==== é–‹æ©Ÿç•«é¢ ========
 
 unsigned char StringForLCD_Line1[13]="";
 unsigned char StringForLCD_Line2[19]="";
@@ -65,18 +65,18 @@ main()
 	IE=0x00;
 	EA=ET0=EX0=ES=1;
 	IP=0x00;
-	PT0=1;  // TF0³ÌÀu¥ı(for mSec­pºâ)
-  SCON=0x70; /*Serial Port mode2*/
-  TCON=0x00,// 0000 0000 ³]©wINT0 ±Ä¦ì·ÇÄ²µo(6-4­¶)
-	IT0=1;//¤£¥i¥Î¦ì·ÇÄ²µo,§_«h¾ã­ÓºÏÅK¸g¹Lªº®É¶¡³£·|¤¤Â_
-	
-	TMOD=0x21;				// 0010 0001,T1±Ämode 2¡BT0±Ämode 1
-  TH0=TH_M1; TL0=TL_M1;	// ³]¸mT0­p¼Æ¶q°ª8¦ì¤¸¡B§C8¦ì¤¸ 
+	PT0=1;  // TF0æœ€å„ªå…ˆ(for mSecè¨ˆç®—)
+	SCON=0x70; /*Serial Port mode2*/
+	TCON=0x00,// 0000 0000 è¨­å®šINT0 æ¡ä½æº–è§¸ç™¼(6-4é )
+	IT0=1;//ä¸å¯ç”¨ä½æº–è§¸ç™¼,å¦å‰‡æ•´å€‹ç£éµç¶“éçš„æ™‚é–“éƒ½æœƒä¸­æ–·
+
+	TMOD=0x21;				// 0010 0001,T1æ¡mode 2ã€T0æ¡mode 1
+	TH0=TH_M1; TL0=TL_M1;	// è¨­ç½®T0è¨ˆæ•¸é‡é«˜8ä½å…ƒã€ä½8ä½å…ƒ 
 	TH1=TL1=250; 
 	
-	MagneticSW=1;		// ³W¹ºMagneticSW¿é¤J 
+	MagneticSW=1;		// è¦åŠƒMagneticSWè¼¸å…¥ 
 	
-	init_LCM();	//¨ú¥N²M°£¿Ã¹õ
+	init_LCM();	//å–ä»£æ¸…é™¤è¢å¹•
 	NewType();
 	
 	write_inst(0x80);write_string(MSG_Welcome_Line1);
@@ -85,7 +85,7 @@ main()
 	write_inst(0xD4);write_string(MSG_Welcome_Line4);
 	delay1ms(3000);
 	
-	TR1=1;TR0=1;					// ±Ò°ÊT1,T0
+	TR1=1;TR0=1;					// å•Ÿå‹•T1,T0
 
 
 	while(1)
@@ -93,15 +93,15 @@ main()
 		// Visable WDT
 		P43=~P43;
 		
-		//=== ½ÆÂøªº­pºâ­n¦b²M°£¿Ã¹õ«e§¹¦¨¡A¤£µMªá¤Ó¦h®É¶¡put char¨ìLCD¡A¿Ã¹õ®e©ö°{°Ê
-		unDispSpeed=(unsigned int)(7468/unDisp_mSec); //­pºâ³t«×
+		//=== è¤‡é›œçš„è¨ˆç®—è¦åœ¨æ¸…é™¤è¢å¹•å‰å®Œæˆï¼Œä¸ç„¶èŠ±å¤ªå¤šæ™‚é–“put charåˆ°LCDï¼Œè¢å¹•å®¹æ˜“é–ƒå‹•
+		unDispSpeed=(unsigned int)(7468/unDisp_mSec); //è¨ˆç®—é€Ÿåº¦
 		unDispMileage=(unsigned int)(2.075*unCycleCounter
-// 																	unCycleCounter<<1	//*2
-// 															   +unCycleCounter>>4	//*0.0625
-// 																 +unCycleCounter>>6	//*0.015625
-																); //­pºâ²Ö­p¨½µ{,°é¼Æ*2.075
+		//unCycleCounter<<1	//*2
+		//+unCycleCounter>>4	//*0.0625
+		//+unCycleCounter>>6	//*0.015625
+		); //è¨ˆç®—ç´¯è¨ˆé‡Œç¨‹,åœˆæ•¸*2.075
 		
-		// ²£¥Í·Ç³ÆÅã¥Ü¦b²Ä¤@¤G¦æªº¦r¦ê
+		// ç”¢ç”Ÿæº–å‚™é¡¯ç¤ºåœ¨ç¬¬ä¸€äºŒè¡Œçš„å­—ä¸²
 		sprintf(StringForLCD_Line1,"Speed:%2dkm/h",unDispSpeed);
 		if(9999>=unDispMileage)
 			sprintf(StringForLCD_Line2,"Total:%4dm,Temp:%c%c",unDispMileage,TABLE[NUMBER[1]],TABLE[NUMBER[2]]);
@@ -109,14 +109,14 @@ main()
 			sprintf(StringForLCD_Line2,"Total:%7dm,T:%c%c",unDispMileage,TABLE[NUMBER[1]],TABLE[NUMBER[2]]);
 		
 		NewType();
-		init_LCM(); //¨ú¥N²M°£¿Ã¹õ
-		//²Ä¤@¦æÅã¥Ü
+		init_LCM(); //å–ä»£æ¸…é™¤è¢å¹•
+		//ç¬¬ä¸€è¡Œé¡¯ç¤º
 			write_inst(0x80);write_string(StringForLCD_Line1);
-		//²Ä¤G¦æÅã¥Ü
-			write_inst(0xC0);write_string(StringForLCD_Line2); write_inst(0xD3);write_char(0x00); //Åã¥Ü«×C   
+		//ç¬¬äºŒè¡Œé¡¯ç¤º
+			write_inst(0xC0);write_string(StringForLCD_Line2); write_inst(0xD3);write_char(0x00); //é¡¯ç¤ºåº¦C   
 		
 		
-		//²Ä¤T,¥|¦æ¥æ´ÀÅã¥Ü
+		//ç¬¬ä¸‰,å››è¡Œäº¤æ›¿é¡¯ç¤º
 		if(64>countMOD%128){
 		  write_inst(0x94);write_string(MSG_Welcome_Line1);
 			write_inst(0xD4);write_string(MSG_Welcome_Line2);
@@ -128,11 +128,11 @@ main()
 		++countMOD;
 		
 		
-			// ¤£¤Ó­«­nªº¸ê°T³Ì«áÅã¥Ü
-		  //(countMOD>>4)%5 ,±NcountMODªºÀW²v°£¥H16,¨ú0~4ªº¶g´ÁÅÜ¤Æ
-			write_inst(0x8D +(countMOD>>4)%5);write_char(0x01); //Åã¥Ü"ªL"
- 			write_inst(0x8E +(countMOD>>4)%5);write_char(0x02); //Åã¥Ü"°ª"
- 			write_inst(0x8F +(countMOD>>4)%5);write_char(0x03); //Åã¥Ü"»·"
+			// ä¸å¤ªé‡è¦çš„è³‡è¨Šæœ€å¾Œé¡¯ç¤º
+		  //(countMOD>>4)%5 ,å°‡countMODçš„é »ç‡é™¤ä»¥16,å–0~4çš„é€±æœŸè®ŠåŒ–
+			write_inst(0x8D +(countMOD>>4)%5);write_char(0x01); //é¡¯ç¤º"æ—"
+ 			write_inst(0x8E +(countMOD>>4)%5);write_char(0x02); //é¡¯ç¤º"é«˜"
+ 			write_inst(0x8F +(countMOD>>4)%5);write_char(0x03); //é¡¯ç¤º"é "
 		
 		GetTempByDS1821();
 		
@@ -145,7 +145,7 @@ main()
 
 
 void serial_INT(void) interrupt 4
-{//PCÂ^¨ú·Å«×¥Î
+{//PCæ“·å–æº«åº¦ç”¨
 		unsigned char ucQUERY;	
 	
 		if(RI)
@@ -173,29 +173,29 @@ void serial_INT(void) interrupt 4
 		}
 }
 
-//== T0¤¤Â_°Æµ{¦¡- ²@¬í­p¼Æ¾¹¡A¤¤Â_¶¶¦ì³Ì°ª(PT0=1) ===================
-void T0_1s(void) interrupt 1// T0¤¤Â_°Æµ{¦¡¶}©l 
-{	TH0=TH_M1; TL0=TL_M1;	// ³]¸mT0­p¼Æ¶q°ª8¦ì¤¸¡B§C8¦ì¤¸ 
+//== T0ä¸­æ–·å‰¯ç¨‹å¼- æ¯«ç§’è¨ˆæ•¸å™¨ï¼Œä¸­æ–·é †ä½æœ€é«˜(PT0=1) ===================
+void T0_1s(void) interrupt 1// T0ä¸­æ–·å‰¯ç¨‹å¼é–‹å§‹ 
+{	TH0=TH_M1; TL0=TL_M1;	// è¨­ç½®T0è¨ˆæ•¸é‡é«˜8ä½å…ƒã€ä½8ä½å…ƒ 
 	mSecCounter++;
 	
-	// ¶W¹L5¬í¨S·PÀ³(==®É³t§C©ó1.5km/hr)´N®É³t=0
+	// è¶…é5ç§’æ²’æ„Ÿæ‡‰(==æ™‚é€Ÿä½æ–¼1.5km/hr)å°±æ™‚é€Ÿ=0
 	(5000<=mSecCounter)&&(unDisp_mSec=65534,mSecCounter=65534);
-}							// T0¤¤Â_°Æµ{¦¡µ²§ô  
-//==int0¤¤Â_°Æµ{¦¡- ½Xªí¤§ ·PÀ³ ==================
-void int0_sw(void) interrupt 0	// int0¤¤Â_°Æµ{¦¡¶}©l 
+}							// T0ä¸­æ–·å‰¯ç¨‹å¼çµæŸ  
+//==int0ä¸­æ–·å‰¯ç¨‹å¼- ç¢¼è¡¨ä¹‹ æ„Ÿæ‡‰ ==================
+void int0_sw(void) interrupt 0	// int0ä¸­æ–·å‰¯ç¨‹å¼é–‹å§‹ 
 {	
-	unDisp_mSec=mSecCounter; //¦s¤U¼Æ­È
-	mSecCounter=0;		// Âk¹s
-	unCycleCounter++; //¨C¦¸¤¤Â_´N¥[¤@°é
+	unDisp_mSec=mSecCounter; //å­˜ä¸‹æ•¸å€¼
+	mSecCounter=0;		// æ­¸é›¶
+	unCycleCounter++; //æ¯æ¬¡ä¸­æ–·å°±åŠ ä¸€åœˆ
 	
-}								// int 0¤¤Â_°Æµ{¦¡µ²§ô  
-// //===¨¾¼u¸õ¨ç¼Æ=====================================
-// void debouncer(void)			// ¨¾¼u¸õ¨ç¼Æ¶}©l 
-// {	int i;						// «Å§iÅÜ¼Æi
-// 	for(i=0;i<2400;i++); 		// ³s¼Æ2400¦¸¡A¬ù20ms
-// }								// ¨¾¼u¸õ¨ç¼Æµ²§ô 
+}								// int 0ä¸­æ–·å‰¯ç¨‹å¼çµæŸ  
+// //===é˜²å½ˆè·³å‡½æ•¸=====================================
+// void debouncer(void)			// é˜²å½ˆè·³å‡½æ•¸é–‹å§‹ 
+// {	int i;						// å®£å‘Šè®Šæ•¸i
+// 	for(i=0;i<2400;i++); 		// é€£æ•¸2400æ¬¡ï¼Œç´„20ms
+// }								// é˜²å½ˆè·³å‡½æ•¸çµæŸ 
 
-// // 40km/hr => 0.1867¬í/°é¢I26"³æ¨®
-// // °£«D®É³t¹F¨ì (0.1867/0.02)*40=373.4km/hr
-// // §_«h¶È20msªº¨¾¼u¸õ©µ¿ğ¨ç¼Æ¤£¼vÅT­p³t
+// // 40km/hr => 0.1867ç§’/åœˆï¼ 26"å–®è»Š
+// // é™¤éæ™‚é€Ÿé”åˆ° (0.1867/0.02)*40=373.4km/hr
+// // å¦å‰‡åƒ…20msçš„é˜²å½ˆè·³å»¶é²å‡½æ•¸ä¸å½±éŸ¿è¨ˆé€Ÿ
 
